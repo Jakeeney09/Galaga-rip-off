@@ -1,0 +1,169 @@
+:root {
+  --bg: #070b14;
+  --panel: rgba(10, 15, 30, 0.72);
+  --line: rgba(130, 180, 255, 0.2);
+  --text: #e8f0ff;
+  --accent: #71b8ff;
+  --danger: #ff8fa3;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(46, 95, 177, 0.18), transparent 35%),
+    radial-gradient(circle at 50% 100%, rgba(99, 46, 177, 0.12), transparent 30%),
+    linear-gradient(180deg, #04060d 0%, #0b1020 100%);
+  color: var(--text);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+body { user-select: none; -webkit-user-select: none; }
+canvas { display: block; }
+button { font: inherit; }
+#hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: calc(10px + var(--safe-top)) 14px 12px;
+  background: linear-gradient(180deg, rgba(5,10,20,.84), rgba(5,10,20,.16));
+  pointer-events: none;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-size: clamp(13px, 1.8vw, 18px);
+}
+.stats {
+  display: flex;
+  gap: clamp(10px, 2vw, 20px);
+  font-size: clamp(12px, 1.7vw, 16px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.controls {
+  font-size: clamp(11px, 1.3vw, 13px);
+  opacity: 0.8;
+  text-align: right;
+}
+#overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 4, 10, 0.55);
+  backdrop-filter: blur(6px);
+  padding: 24px;
+}
+#overlay.show { display: flex; }
+.panel {
+  width: min(92vw, 520px);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 28px 30px;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.42);
+  text-align: center;
+}
+.panel h1 {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 5vw, 50px);
+  letter-spacing: .1em;
+  color: var(--accent);
+}
+.panel p { margin: 10px 0; line-height: 1.5; }
+.panel .small { opacity: 0.86; }
+.cta {
+  margin-top: 12px;
+  min-width: 160px;
+  border: 1px solid rgba(113,184,255,.45);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(113,184,255,.28), rgba(113,184,255,.14));
+  color: var(--text);
+  padding: 14px 24px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+#touch-ui {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 12;
+  display: none;
+  justify-content: space-between;
+  align-items: end;
+  padding: 14px 16px calc(14px + var(--safe-bottom));
+  pointer-events: none;
+}
+#touch-pad, #fire-button {
+  pointer-events: auto;
+}
+#touch-pad {
+  width: min(42vw, 300px);
+  height: min(28vw, 150px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  backdrop-filter: blur(8px);
+}
+#fire-button {
+  min-width: 92px;
+  min-height: 92px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,143,163,.38);
+  background: radial-gradient(circle at 35% 30%, rgba(255,165,191,.9), rgba(255,95,143,.52));
+  color: white;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  box-shadow: 0 10px 30px rgba(255,95,143,.22);
+}
+#rotateNotice {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3,6,12,.92);
+  padding: 24px;
+  text-align: center;
+}
+.rotate-panel {
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(12, 18, 32, 0.88);
+  padding: 24px;
+  border-radius: 18px;
+  max-width: 360px;
+}
+.mobile-only { display: none; }
+.desktop-only { display: block; }
+
+@media (hover: none) and (pointer: coarse) {
+  .mobile-only { display: block; }
+  .desktop-only { display: none; }
+  #touch-ui { display: flex; }
+  #hud {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+  .stats { order: 3; width: 100%; justify-content: flex-start; }
+  .controls { width: 100%; text-align: left; }
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+  #rotateNotice { display: flex; }
+}
